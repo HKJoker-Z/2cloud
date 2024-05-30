@@ -80,6 +80,11 @@
         from disk_files
         where folder_id = #{folderId}
     </select>
+    <select id="selectFolderIdByShareId" resultType="java.lang.Integer">
+        select s.file_id
+        from share s
+        where s.id = #{shareId}
+    </select>
 
     <delete id="deleteById">
         delete from disk_files

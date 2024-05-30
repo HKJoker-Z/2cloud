@@ -52,4 +52,6 @@ public interface DiskFilesMapper {
 
     @Update("update disk_files set `delete` = 0 where id = #{id}")
     void restoreById(Integer id);
+
+    Integer selectFolderIdByShareId(Integer shareId);
 }

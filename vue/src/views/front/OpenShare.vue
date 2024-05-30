@@ -67,26 +67,36 @@ export default {
         { text: 'folder', icon: 'el-icon-folder' },
       ],
       tableData: [],
-      folderId: this.$route.query.folderId   // 注意给 全局的folderId 赋值，要不然后面没法查询数据
+      folderId: '',   // 注意给 全局的folderId 赋值，要不然后面没法查询数据
+      fileId: '',
     }
   },
 
   created() {
     this.load()
+    this.getFolderId();
     this.debug()
   },
 
   methods: {
+
+   getFolderId() {
+     this.$request.get('/diskFiles/getFolderId/' + this.shareId).then(res=> {
+        this.fileId = res.data ? res.data : '';
+      })
+   },
+
    debug() {
      console.log("in debug")
-     console.log(this.folderId)
      console.log(this.shareId)
+     console.log(this.fileId)
 
    },
 
     openFile(row) {
       if (row.type === 'folder') { // 文件夹  点进来肯定有 folderId
-        location.href = '/front/openShare?code=' + this.code + '&shareId=' + this.shareId + '&folderId=' + this.folderId
+        // location.href = '/front/openShare?code=' + this.code + '&shareId=' + this.shareId + '&folderId=' + row.id
+        location.href = '/front/home?category=' + this.category + '&folderId=' + row.id
       } else {  // 如果是文件的话  直接预览
         console.log(row)
         window.open(this.$baseUrl + '/diskFiles/preview/' + row.id)

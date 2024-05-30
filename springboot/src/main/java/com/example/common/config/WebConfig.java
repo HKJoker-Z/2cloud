@@ -21,6 +21,7 @@ public class WebConfig implements  WebMvcConfigurer {
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/files/**")
                 .excludePathPatterns("/diskFiles/download/**")
-                .excludePathPatterns("/diskFiles/preview/**");
+                .excludePathPatterns("/diskFiles/preview/**")
+                .excludePathPatterns("/diskFiles/getFolderId/**");
     }
 }

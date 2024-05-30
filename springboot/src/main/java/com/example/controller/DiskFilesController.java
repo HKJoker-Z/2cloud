@@ -5,8 +5,10 @@ import com.example.common.Result;
 import com.example.entity.DiskFiles;
 import com.example.entity.Share;
 import com.example.entity.Trash;
+import com.example.mapper.DiskFilesMapper;
 import com.example.service.DiskFilesService;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,8 @@ public class DiskFilesController {
 
     @Resource
     private DiskFilesService diskFilesService;
+    @Autowired
+    private DiskFilesMapper diskFilesMapper;
 
     /**
      * 新增
@@ -180,4 +184,13 @@ public class DiskFilesController {
        return Result.success(list);
     }
 
+    /**
+     *
+     * 根据shareId查询folderId
+     */
+    @GetMapping("/getFolderId/{shareId}")
+    public Result getFolderId(@PathVariable Integer shareId) {
+       Integer folderId = diskFilesMapper.selectFolderIdByShareId(shareId);
+       return Result.success(folderId);
+    }
 }
