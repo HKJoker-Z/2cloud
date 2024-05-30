@@ -49,8 +49,8 @@
                     <el-tooltip content="分享" effect="light" :open-delay="200">
                       <i class="el-icon-share" style="margin-right: 10px; cursor: pointer" @click.stop="share(scope.row)" ></i>
                     </el-tooltip>
-                    <el-tooltip content="下载" effect="light" :open-delay="200" v-if="scope.row.folder === '否'">
-                      <i class="el-icon-download" style="margin-right: 10px; cursor: pointer" @click.stop="download(scope.row.file)"></i>
+                    <el-tooltip content="下载" effect="light" :open-delay="200" >
+                      <i class="el-icon-download" style="margin-right: 10px; cursor: pointer" @click.stop="download(scope.row, scope.row.file)"></i>
                     </el-tooltip>
                     <el-tooltip content="删除" effect="light" :open-delay="200" >
                       <i class="el-icon-delete" style="margin-right: 10px; cursor: pointer" @click.stop="del(scope.row.id)" ></i>
@@ -116,7 +116,8 @@ export default {
       folders: [],
       shareVisible: false,
       form: {},
-      shareLink: ''
+      shareLink: '',
+      fileGroup: []//下载文件夹时用于保存文件们的变量
 
     }
   },
@@ -173,8 +174,12 @@ export default {
       }
     },
 
-    download(url) {
-      window.open(url)  // 文件下载
+    download(row, url) {
+      if (row.folder === '是') {//是文件夹 那就找出此文件夹下的所有非文件夹文件
+        console.log("下载文件夹")
+      } else {//不是文件夹就直接下载
+        window.open(url)  // 文件下载
+      }
     },
     mouseEnter(row) {
       if (!row.unSave) {
